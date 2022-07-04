@@ -6,6 +6,10 @@ import io.restassured.RestAssured;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 import static io.restassured.RestAssured.*;
@@ -16,12 +20,12 @@ public class Basics {
     HashMap<String, String> placeID = new HashMap<>();
 
     @Test
-    public void createNewPlace() {
+    public void createNewPlace() throws IOException {
         RestAssured.baseURI = "https://rahulshettyacademy.com";
 
         //Create new Place
         String response = given().log().all().header("Content-Type", "application/json")
-                .body(payloads.addPlace())
+                .body(new String(Files.readAllBytes(Paths.get("C:\\Users\\Martin_Bachvarov\\Downloads\\RestAssuredFramework\\src\\test\\resources\\AddPlacePayload.txt"))))
                 .when().post("/maps/api/place/add/json")
                 .then().statusCode(200).extract().response().asString();
 
