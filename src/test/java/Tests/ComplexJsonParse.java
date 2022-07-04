@@ -5,6 +5,7 @@ import io.restassured.path.json.JsonPath;
 
 public class ComplexJsonParse {
     public static void main(String[] args) {
+        //mack response
         JsonPath jsonPath = new JsonPath(payloads.CoursePrice());
         //print number of courses
         int numberOfCourses = jsonPath.getInt("courses.size()");

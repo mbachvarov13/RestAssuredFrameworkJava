@@ -10,6 +10,7 @@ public class SumValidation {
     @Test
     public void sumOfCourses() {
         int sumOfAll = 0;
+        //mock response
         JsonPath jsonPath = new JsonPath(payloads.CoursePrice());
 
         int numberOfCourses = jsonPath.getInt("courses.size()");
