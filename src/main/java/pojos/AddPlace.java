@@ -3,14 +3,14 @@ package pojos;
 import java.util.List;
 
 public class AddPlace {
-    private int accuracy;
-    private String name;
-    private String phone_number;
-    private String address;
-    private String website;
-    private String language;
-    private Location location;
-    private List<String> types;
+    public int accuracy;
+    public String name;
+    public String phone_number;
+    public String address;
+    public String website;
+    public String language;
+    public Location location;
+    public List<String> types;
 
     public void setAccuracy(int accuracy) {
         this.accuracy = accuracy;
@@ -42,18 +42,5 @@ public class AddPlace {
 
     public void setTypes(List<String> types) {
         this.types = types;
-    }
-
-    class Location {
-        private double lat;
-        private double lng;
-
-        public void setLat(double lat) {
-            this.lat = lat;
-        }
-
-        public void setLng(double lng) {
-            this.lng = lng;
-        }
     }
 }
