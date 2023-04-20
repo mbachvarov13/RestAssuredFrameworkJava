@@ -3,57 +3,35 @@ package stepDefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 import org.junit.Assert;
-import pojos.AddPlace;
-import pojos.Location;
+import resources.APIResources;
+import resources.TestDataBuild;
+import resources.Utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 
-public class StepDef {
-    private RequestSpecification req;
-    private ResponseSpecification resBuild;
+public class StepDef extends Utils {
     private Response response;
+    TestDataBuild testDataBuild = new TestDataBuild();
 
-    @Given("I have add place payload")
-    public void createAddPlacePayload() {
-        RestAssured.baseURI = "https://rahulshettyacademy.com";
-
-        AddPlace p = new AddPlace();
-        p.setAccuracy(50);
-        p.setAddress("29, side layout, cohen 09");
-        p.setLanguage("French-IN");
-        p.setPhone_number("(+91) 983 893 3937");
-        p.setWebsite("https://rahulshettyacademy.com");
-        p.setName("Frontline house");
-        List<String> myList = new ArrayList<String>();
-        myList.add("shoe park");
-        myList.add("shop");
-
-        p.setTypes(myList);
-        Location l = new Location();
-        l.setLat(-38.383494);
-        l.setLang(33.427362);
-        p.setLocation(l);
-
-        RequestSpecification reqBuild = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com").addQueryParam("key", "qaclick123").setContentType(ContentType.JSON).build();
-        req = given().log().all().spec(reqBuild).body(p);
+    @Given("^I have add place payload (.*), (.*), (.*)$")
+    public void addPlacePayload(String name, String address, String language) throws IOException {
+        req = given().spec(requestSpecification()).body(testDataBuild.addPlacePayload(name, address, language));
     }
 
-    @When("I POST a new place")
-    public void addNewPlace() {
-        resBuild = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
-        response = req.when().post("/maps/api/place/add/json").then().spec(resBuild).extract().response();
+    @When("^I call (.*) with (.*) http request$")
+    public void createHttpRequest(String resource, String httpMethod) {
+        APIResources apiResources = APIResources.valueOf(resource);
+
+        if (httpMethod.equalsIgnoreCase("POST")) {
+            response = req.when().post(apiResources.getURLPath());
+
+        } else if (httpMethod.equalsIgnoreCase("GET")) {
+            response = req.when().get(apiResources.getURLPath());
+        }
     }
 
     @Then("^I got status code (.*)$")
@@ -63,7 +41,16 @@ public class StepDef {
 
     @Then("^returned (.*) in the response is (.*)$")
     public void checkParams(String parameter, String parameterValue) {
-        JsonPath jp = new JsonPath(response.asString());
-        Assert.assertEquals(parameterValue, jp.get(parameter).toString());
+        Assert.assertEquals(parameterValue, getJsonPath(response, parameter));
+    }
+
+    @Then("^verify (.*) returned by (.*) is the same as in the POST request$")
+    public void checkName(String name, String resource) throws IOException {
+        String placeId = getJsonPath(response, "place_id");
+        req = given().spec(requestSpecification()).queryParam("place_id", placeId);
+        createHttpRequest(resource, "GET");
+
+        String actualName = getJsonPath(response, "name");
+        Assert.assertEquals(name, actualName);
     }
 }
