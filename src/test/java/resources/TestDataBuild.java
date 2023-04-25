@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestDataBuild {
-    public AddPlace addPlacePayload(String name, String address, String language) {
+    public AddPlace createPlacePayload(String name, String address, String language) {
         AddPlace place = new AddPlace();
         place.setAccuracy(50);
         place.setAddress(address);
@@ -27,4 +27,9 @@ public class TestDataBuild {
 
         return place;
     }
+
+    public String createDeletePlacePayload(String placeId) {
+        return "{\r\n    \"place_id\":\"" + placeId + "\"\r\n}";
+    }
+
 }

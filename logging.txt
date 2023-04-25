@@ -27,7 +27,7 @@ Body:
     ]
 }
 HTTP/1.1 200 OK
-Date: Wed, 19 Apr 2023 12:23:40 GMT
+Date: Thu, 20 Apr 2023 07:32:39 GMT
 Server: Apache/2.4.41 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: POST
@@ -40,17 +40,17 @@ Content-Type: application/json;charset=UTF-8
 
 {
     "status": "OK",
-    "place_id": "b5ebeffeba1662d494eb573dd1615e39",
+    "place_id": "702a34f9ebd20d4a4d530fd08a96a558",
     "scope": "APP",
-    "reference": "e16707612081d118aad5fb2ad898f974e16707612081d118aad5fb2ad898f974",
-    "id": "e16707612081d118aad5fb2ad898f974"
+    "reference": "da6610da930a76ee5718569419d4d0f9da6610da930a76ee5718569419d4d0f9",
+    "id": "da6610da930a76ee5718569419d4d0f9"
 }
 Request method:	GET
-Request URI:	https://rahulshettyacademy.com/maps/api/place/get/json?key=qaclick123&place_id=b5ebeffeba1662d494eb573dd1615e39
+Request URI:	https://rahulshettyacademy.com/maps/api/place/get/json?key=qaclick123&place_id=702a34f9ebd20d4a4d530fd08a96a558
 Proxy:			<none>
 Request params:	<none>
 Query params:	key=qaclick123
-				place_id=b5ebeffeba1662d494eb573dd1615e39
+				place_id=702a34f9ebd20d4a4d530fd08a96a558
 Form params:	<none>
 Path params:	<none>
 Headers:		Accept=*/*
@@ -75,7 +75,7 @@ Body:
     ]
 }
 HTTP/1.1 200 OK
-Date: Wed, 19 Apr 2023 12:23:40 GMT
+Date: Thu, 20 Apr 2023 07:32:40 GMT
 Server: Apache/2.4.41 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: POST
@@ -98,4 +98,35 @@ Content-Type: application/json;charset=UTF-8
     "types": "shoe park,shop",
     "website": "https://rahulshettyacademy.com",
     "language": "TestLanguage"
+}
+Request method:	POST
+Request URI:	https://rahulshettyacademy.com/maps/api/place/delete/json?key=qaclick123&place_id=702a34f9ebd20d4a4d530fd08a96a558
+Proxy:			<none>
+Request params:	<none>
+Query params:	key=qaclick123
+				place_id=702a34f9ebd20d4a4d530fd08a96a558
+Form params:	<none>
+Path params:	<none>
+Headers:		Accept=*/*
+				Content-Type=application/json
+Cookies:		<none>
+Multiparts:		<none>
+Body:
+{
+    "place_id": "702a34f9ebd20d4a4d530fd08a96a558"
+}
+HTTP/1.1 200 OK
+Date: Thu, 20 Apr 2023 07:32:41 GMT
+Server: Apache/2.4.41 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With
+Content-Length: 15
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: application/json;charset=UTF-8
+
+{
+    "status": "OK"
 }

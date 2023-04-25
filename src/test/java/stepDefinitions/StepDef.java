@@ -16,10 +16,16 @@ import static io.restassured.RestAssured.given;
 public class StepDef extends Utils {
     private Response response;
     TestDataBuild testDataBuild = new TestDataBuild();
+    public static String placeId;
 
-    @Given("^I have add place payload (.*), (.*), (.*)$")
-    public void addPlacePayload(String name, String address, String language) throws IOException {
-        req = given().spec(requestSpecification()).body(testDataBuild.addPlacePayload(name, address, language));
+    @Given("^I am creating add place payload (.*), (.*), (.*)$")
+    public void createPlacePayload(String name, String address, String language) throws IOException {
+        req = given().spec(requestSpecification()).body(testDataBuild.createPlacePayload(name, address, language));
+    }
+
+    @Given("^I am creating delete place payload$")
+    public void createDeletePlacePayload() throws IOException {
+        req = given().spec(requestSpecification()).body(testDataBuild.createDeletePlacePayload(placeId));
     }
 
     @When("^I call (.*) with (.*) http request$")
@@ -46,7 +52,7 @@ public class StepDef extends Utils {
 
     @Then("^verify (.*) returned by (.*) is the same as in the POST request$")
     public void checkName(String name, String resource) throws IOException {
-        String placeId = getJsonPath(response, "place_id");
+        placeId = getJsonPath(response, "place_id");
         req = given().spec(requestSpecification()).queryParam("place_id", placeId);
         createHttpRequest(resource, "GET");
 
